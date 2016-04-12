@@ -14,19 +14,25 @@ import ha.custcom.webview.lib.wedgit.webview.CustomWebViewClient;
  * Created by bin on 2016/4/11.
  *
  */
-public class BaseWebViewActivity extends SimpleBaseActivity implements CustomWebViewClient.WebViewCallBackListener {
+public abstract class BaseWebViewActivity extends SimpleBaseActivity implements CustomWebViewClient.WebViewCallBackListener {
 
-    CustomWebView mWebview;
+    protected CustomWebView mWebview;
     PullToRefreshView mPullToRefresh;
     MProgressWheel mProgressWheel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mWebview = (CustomWebView) findViewById(R.id.webview);
-        mPullToRefresh = (PullToRefreshView) findViewById(R.id.pull_to_refresh);
-        mProgressWheel = (MProgressWheel) findViewById(R.id.progress_wheel);
+        findView();
+        initViews();
+        loadUrl();
+    }
 
+    protected void loadUrl() {
+        mWebview.loadUrl(getLoadUrl());
+    }
+
+    protected void initViews() {
         mWebview.setWebViewClient(new CustomWebViewClient(this));
         mPullToRefresh.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
@@ -42,6 +48,14 @@ public class BaseWebViewActivity extends SimpleBaseActivity implements CustomWeb
             }
         });
     }
+
+    protected void findView() {
+        mWebview = (CustomWebView) findViewById(R.id.webview);
+        mPullToRefresh = (PullToRefreshView) findViewById(R.id.pull_to_refresh);
+        mProgressWheel = (MProgressWheel) findViewById(R.id.progress_wheel);
+    }
+
+    protected abstract String getLoadUrl();
 
     @Override
     protected int getLayoutResource() {
