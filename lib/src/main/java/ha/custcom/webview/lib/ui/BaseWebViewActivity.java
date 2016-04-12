@@ -1,5 +1,6 @@
 package ha.custcom.webview.lib.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -14,7 +15,7 @@ import ha.custcom.webview.lib.wedgit.webview.CustomWebViewClient;
  * Created by bin on 2016/4/11.
  *
  */
-public abstract class BaseWebViewActivity extends SimpleBaseActivity implements CustomWebViewClient.WebViewCallBackListener {
+public abstract class BaseWebViewActivity extends Activity implements CustomWebViewClient.WebViewCallBackListener {
 
     protected CustomWebView mWebview;
     PullToRefreshView mPullToRefresh;
@@ -23,6 +24,7 @@ public abstract class BaseWebViewActivity extends SimpleBaseActivity implements 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_webview);
         findView();
         initViews();
         loadUrl();
@@ -56,11 +58,6 @@ public abstract class BaseWebViewActivity extends SimpleBaseActivity implements 
     }
 
     protected abstract String getLoadUrl();
-
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.activity_webview;
-    }
 
     @Override
     public void onPageStarted(String url) {

@@ -1,9 +1,11 @@
 package ha.custcom.webview.lib.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 
 import ha.custcom.webview.lib.R;
 
@@ -11,12 +13,13 @@ import ha.custcom.webview.lib.R;
  * by bin
  * 装载fragment通用类
  */
-public class CommonActivity extends SimpleBaseActivity {
+public class CommonActivity extends FragmentActivity {
     public static final String CLAZ = "clas";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_common);
         Intent intent = getIntent();
         Class clz = (Class) intent.getSerializableExtra(CLAZ);
         Fragment fragment = null;
@@ -38,8 +41,4 @@ public class CommonActivity extends SimpleBaseActivity {
         context.startActivity(intent);
     }
 
-    @Override
-    protected int getLayoutResource() {
-        return R.layout.activity_common;
-    }
 }

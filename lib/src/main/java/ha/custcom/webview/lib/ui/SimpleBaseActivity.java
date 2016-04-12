@@ -17,13 +17,6 @@ public abstract class SimpleBaseActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(getLayoutResource());
-        ButterKnife.inject(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.reset(this);
     }
 
     protected abstract int getLayoutResource();
