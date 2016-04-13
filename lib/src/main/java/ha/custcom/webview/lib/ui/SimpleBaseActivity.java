@@ -2,16 +2,15 @@ package ha.custcom.webview.lib.ui;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
-import butterknife.ButterKnife;
 
 
 /**
  * Created by bin on 2016/4/11.
  * 使用依赖注入
  */
-public abstract class SimpleBaseActivity extends FragmentActivity {
+public abstract class SimpleBaseActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {

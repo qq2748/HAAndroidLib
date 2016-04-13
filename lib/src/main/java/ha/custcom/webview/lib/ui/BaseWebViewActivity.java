@@ -1,7 +1,7 @@
 package ha.custcom.webview.lib.ui;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -15,7 +15,7 @@ import ha.custcom.webview.lib.wedgit.webview.CustomWebViewClient;
  * Created by bin on 2016/4/11.
  *
  */
-public abstract class BaseWebViewActivity extends Activity implements CustomWebViewClient.WebViewCallBackListener {
+public abstract class BaseWebViewActivity extends AppCompatActivity implements CustomWebViewClient.WebViewCallBackListener {
 
     protected CustomWebView mWebview;
     PullToRefreshView mPullToRefresh;

@@ -9,13 +9,13 @@ android {
             storePassword 'aaaaaa'
         }
     }
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion project.ANDROID_BUILD_SDK_VERSION
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+
     defaultConfig {
-        applicationId "ha.custom.webview"
-        minSdkVersion 9
-        targetSdkVersion 23
-        versionCode 1
+        minSdkVersion project.ANDROID_BUILD_MIN_SDK_VERSION
+        targetSdkVersion project.ANDROID_BUILD_TARGET_SDK_VERSION
+        versionCode 4
         versionName "1.0"
     }
     buildTypes {
@@ -31,6 +31,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:'+project.SUPPORT_VERSION
     compile project(':lib')
 }
