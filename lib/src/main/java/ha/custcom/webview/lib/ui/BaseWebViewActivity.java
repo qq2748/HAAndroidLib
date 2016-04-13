@@ -1,7 +1,7 @@
 package ha.custcom.webview.lib.ui;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.webkit.WebView;
 
@@ -15,7 +15,7 @@ import ha.custcom.webview.lib.wedgit.webview.CustomWebViewClient;
  * Created by bin on 2016/4/11.
  *
  */
-public abstract class BaseWebViewActivity extends AppCompatActivity implements CustomWebViewClient.WebViewCallBackListener {
+public abstract class BaseWebViewActivity extends FragmentActivity implements CustomWebViewClient.WebViewCallBackListener {
 
     protected CustomWebView mWebview;
     PullToRefreshView mPullToRefresh;
@@ -66,7 +66,6 @@ public abstract class BaseWebViewActivity extends AppCompatActivity implements C
 
     @Override
     public void onPageFinished(final String url) {
-
         mProgressWheel.setVisibility(View.GONE);
     }
 
@@ -81,6 +80,7 @@ public abstract class BaseWebViewActivity extends AppCompatActivity implements C
 
     @Override
     public void onExternalApplicationUrl(String url) {
+
     }
 
     @Override

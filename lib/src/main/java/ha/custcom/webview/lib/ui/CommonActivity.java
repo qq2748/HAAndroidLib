@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 
 import ha.custcom.webview.lib.R;
@@ -12,7 +13,7 @@ import ha.custcom.webview.lib.R;
  * by bin
  * 装载fragment通用类
  */
-public class CommonActivity extends AppCompatActivity {
+public class CommonActivity extends FragmentActivity {
     public static final String CLAZ = "clas";
 
     @Override
@@ -24,12 +25,9 @@ public class CommonActivity extends AppCompatActivity {
         Fragment fragment = null;
         try {
             fragment = (Fragment) Class.forName(clz.getName()).newInstance();
-        } catch (InstantiationException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            finish();
         }
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commitAllowingStateLoss();
     }

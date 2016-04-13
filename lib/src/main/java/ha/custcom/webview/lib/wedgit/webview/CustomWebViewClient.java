@@ -1,31 +1,24 @@
 package ha.custcom.webview.lib.wedgit.webview;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.net.http.SslError;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
-import android.webkit.WebView.HitTestResult;
 import android.webkit.WebViewClient;
 
-import ha.custcom.webview.lib.appcation.AppController;
 
 /**
  * Convenient extension of WebViewClient.
  */
 public class CustomWebViewClient extends WebViewClient {
     private boolean error;
-    private Context context;
     private WebViewCallBackListener webViewCallBackListener;
 
     public CustomWebViewClient(WebViewCallBackListener webViewCallBackListener) {
         super();
         this.webViewCallBackListener = webViewCallBackListener;
-        context = AppController.getContext();
     }
 
     @Override
@@ -59,18 +52,11 @@ public class CustomWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
         if (isExternalApplicationUrl(url)) {
             webViewCallBackListener.onExternalApplicationUrl(url);
             return true;
 
-        } else if (view.getHitTestResult()!=null&&view.getHitTestResult().getType() == HitTestResult.EMAIL_TYPE) {
-            onMailTo(url);
-            return true;
-
         } else {
-
-
             ((CustomWebView) view).resetLoadedUrl();
             webViewCallBackListener.onUrlLoading(url);
             return false;
@@ -89,11 +75,6 @@ public class CustomWebViewClient extends WebViewClient {
                 url.startsWith("itpc://");
     }
 
-    public void onMailTo(String url) {
-        Intent sendMail = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        context.startActivity(sendMail);
-    }
-
     public interface WebViewCallBackListener {
         public void onPageFinished(String url);
 
@@ -110,7 +91,6 @@ public class CustomWebViewClient extends WebViewClient {
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
         super.onReceivedError(view, errorCode, description, failingUrl);
         error = true;
-        webViewCallBackListener.onReceivedError(view,errorCode,description,failingUrl);
-
+        webViewCallBackListener.onReceivedError(view, errorCode, description, failingUrl);
     }
 }

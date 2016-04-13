@@ -19,7 +19,7 @@ public class JavascriptInterFace {
 
     @android.webkit.JavascriptInterface
     public void showToast(String msg) {
-        ToastUtils.showShort(msg);
+        ToastUtils.showShort(context,msg);
     }
 
 }

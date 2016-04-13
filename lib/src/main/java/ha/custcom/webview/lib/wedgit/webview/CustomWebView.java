@@ -110,7 +110,7 @@ public class CustomWebView extends WebView {
 
     @Override
     public void reload() {
-        if (HAUtil.canNetWork())
+        if (HAUtil.canNetWork(mContext))
             this.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         else
             return;
@@ -119,7 +119,7 @@ public class CustomWebView extends WebView {
 
     @Override
     public void loadUrl(String url, Map<String, String> additionalHttpHeaders) {
-        if (HAUtil.canNetWork())
+        if (HAUtil.canNetWork(mContext))
             this.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         else
             this.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
@@ -159,7 +159,7 @@ public class CustomWebView extends WebView {
 
     @Override
     public void loadUrl(String url) {
-        if (HAUtil.canNetWork())
+        if (HAUtil.canNetWork(mContext))
             this.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
         else
             this.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
