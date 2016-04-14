@@ -61,12 +61,14 @@ public abstract class BaseWebViewActivity extends FragmentActivity implements Cu
 
     @Override
     public void onPageStarted(String url) {
-        mProgressWheel.setVisibility(View.VISIBLE);
+        if(mProgressWheel!=null)
+            mProgressWheel.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onPageFinished(final String url) {
-        mProgressWheel.setVisibility(View.GONE);
+        if(mProgressWheel!=null)
+            mProgressWheel.setVisibility(View.GONE);
     }
 
     @Override

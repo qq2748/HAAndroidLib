@@ -3,10 +3,13 @@ package ha.custcom.webview.lib.wedgit.webview;
 
 import android.graphics.Bitmap;
 import android.net.http.SslError;
+import android.os.Handler;
+import android.os.Looper;
 import android.webkit.HttpAuthHandler;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 
 
 /**
@@ -15,6 +18,7 @@ import android.webkit.WebViewClient;
 public class CustomWebViewClient extends WebViewClient {
     private boolean error;
     private WebViewCallBackListener webViewCallBackListener;
+    private static Handler handler = new Handler(Looper.getMainLooper());
 
     public CustomWebViewClient(WebViewCallBackListener webViewCallBackListener) {
         super();
@@ -22,26 +26,34 @@ public class CustomWebViewClient extends WebViewClient {
     }
 
     @Override
-    public void onPageFinished(WebView view, String url) {
+    public void onPageFinished(WebView view, final String url) {
         super.onPageFinished(view, url);
         ((CustomWebView) view).notifyPageFinished();
         if (!error) {
-//            view.loadUrl("javascript:(function() { document.getElementsByTagName('header')[0].style.display = 'none'; })()");
-            webViewCallBackListener.onPageFinished(url);
+            view.loadUrl("javascript:(function() { document.getElementsByTagName('header')[0].style.display = 'none'; })()");
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    webViewCallBackListener.onPageFinished(url);
+                }
+            });
         }
         error = false;
 
     }
 
     @Override
-    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+    public void onPageStarted(WebView view, final String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
         error = false;
 
         ((CustomWebView) view).notifyPageStarted();
-        webViewCallBackListener.onPageStarted(url);
-
-
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                webViewCallBackListener.onPageStarted(url);
+            }
+        });
     }
 
     @Override
@@ -51,14 +63,24 @@ public class CustomWebViewClient extends WebViewClient {
     }
 
     @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+    public boolean shouldOverrideUrlLoading(WebView view, final String url) {
         if (isExternalApplicationUrl(url)) {
-            webViewCallBackListener.onExternalApplicationUrl(url);
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    webViewCallBackListener.onExternalApplicationUrl(url);
+                }
+            });
             return true;
 
         } else {
             ((CustomWebView) view).resetLoadedUrl();
-            webViewCallBackListener.onUrlLoading(url);
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    webViewCallBackListener.onUrlLoading(url);
+                }
+            });
             return false;
         }
     }
@@ -76,21 +98,26 @@ public class CustomWebViewClient extends WebViewClient {
     }
 
     public interface WebViewCallBackListener {
-        public void onPageFinished(String url);
+        void onPageFinished(String url);
 
-        public void onPageStarted(String url);
+        void onPageStarted(String url);
 
-        public void onExternalApplicationUrl(String url);
+        void onExternalApplicationUrl(String url);
 
-        public void onUrlLoading(String url);
+        void onUrlLoading(String url);
 
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl);
+        void onReceivedError(WebView view, int errorCode, String description, String failingUrl);
     }
 
     @Override
-    public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+    public void onReceivedError(final WebView view, final int errorCode, final String description, final String failingUrl) {
         super.onReceivedError(view, errorCode, description, failingUrl);
         error = true;
-        webViewCallBackListener.onReceivedError(view, errorCode, description, failingUrl);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                webViewCallBackListener.onReceivedError(view, errorCode, description, failingUrl);
+            }
+        });
     }
 }
