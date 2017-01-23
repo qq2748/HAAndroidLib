@@ -3,8 +3,8 @@ package ha.custcom.webview.lib.ui;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 
+import butterknife.ButterKnife;
 
 
 /**
@@ -17,6 +17,7 @@ public abstract class SimpleBaseActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(getLayoutResource());
+        ButterKnife.bind(this);
     }
 
     protected abstract int getLayoutResource();

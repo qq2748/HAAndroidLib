@@ -1,12 +1,11 @@
 apply plugin: 'com.android.application'
-
 android {
     signingConfigs {
         release {
-            keyAlias 'aaaaaa'
-            keyPassword 'aaaaaa'
-            storeFile file('D:/ha/key.jks')
-            storePassword 'aaaaaa'
+            keyAlias 'qq2748'
+            keyPassword 'qq2748'
+            storeFile file('haha.jks')
+            storePassword 'qq2748'
         }
     }
     compileSdkVersion project.ANDROID_BUILD_SDK_VERSION
@@ -27,10 +26,15 @@ android {
         }
     }
 }
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:'+project.SUPPORT_VERSION
+    compile ('com.android.support:appcompat-v7:' + project.SUPPORT_VERSION){
+        exclude group: "com.android.support", module: "support-v4"
+    }
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     compile project(':lib')
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
+    compile 'com.google.android.gms:play-services:+'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
 }

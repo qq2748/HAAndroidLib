@@ -1,11 +1,13 @@
 package ha.custcom.webview.lib.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.webkit.WebView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import ha.custcom.webview.lib.R;
+import ha.custcom.webview.lib.R2;
 import ha.custcom.webview.lib.wedgit.MProgressWheel;
 import ha.custcom.webview.lib.wedgit.fly.PullToRefreshView;
 import ha.custcom.webview.lib.wedgit.webview.CustomWebView;
@@ -13,21 +15,28 @@ import ha.custcom.webview.lib.wedgit.webview.CustomWebViewClient;
 
 /**
  * Created by bin on 2016/4/11.
- *
  */
-public abstract class BaseWebViewActivity extends FragmentActivity implements CustomWebViewClient.WebViewCallBackListener {
+public abstract class BaseWebViewActivity extends SimpleBaseActivity implements CustomWebViewClient.WebViewCallBackListener {
 
-    protected CustomWebView mWebview;
+    @BindView(R2.id.webview)
+    CustomWebView mWebview;
+    @BindView(R2.id.pull_to_refresh)
     PullToRefreshView mPullToRefresh;
+    @BindView(R2.id.progress_wheel)
     MProgressWheel mProgressWheel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_webview);
+        ButterKnife.bind(this);
         findView();
         initViews();
         loadUrl();
+    }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.activity_webview;
     }
 
     protected void loadUrl() {
@@ -61,13 +70,13 @@ public abstract class BaseWebViewActivity extends FragmentActivity implements Cu
 
     @Override
     public void onPageStarted(String url) {
-        if(mProgressWheel!=null)
+        if (mProgressWheel != null)
             mProgressWheel.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onPageFinished(final String url) {
-        if(mProgressWheel!=null)
+        if (mProgressWheel != null)
             mProgressWheel.setVisibility(View.GONE);
     }
 

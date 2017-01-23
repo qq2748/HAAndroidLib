@@ -13,4 +13,6 @@ public class WebViewActivity extends BaseWebViewActivity {
     protected String getLoadUrl() {
         return "https://www.baidu.com/";
     }
+
+
 }
