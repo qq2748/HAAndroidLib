@@ -359,6 +359,7 @@ public class CustomWebView extends WebView {
                 mSetFindIsUp = null;
                 mNotifyFindDialogDismissed = null;
 
+
             }
 
             mBoMethodsLoaded = true;
