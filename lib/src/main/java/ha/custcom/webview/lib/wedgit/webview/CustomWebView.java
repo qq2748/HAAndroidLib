@@ -358,6 +358,7 @@ public class CustomWebView extends WebView {
                 Log.e("CustomWebView", "loadMethods(): " + e.getMessage());
                 mSetFindIsUp = null;
                 mNotifyFindDialogDismissed = null;
+
             }
 
             mBoMethodsLoaded = true;
