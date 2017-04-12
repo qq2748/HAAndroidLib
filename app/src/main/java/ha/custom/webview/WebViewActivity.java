@@ -11,7 +11,7 @@ public class WebViewActivity extends BaseWebViewActivity {
 
     @Override
     protected String getLoadUrl() {
-        return "https://www.baidu.com/";
+        return "http://www.bozhong.com/";
     }
 
 

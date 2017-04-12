@@ -93,7 +93,6 @@ bintray {
     dependencies {
         compile fileTree(include: ['*.jar'], dir: 'libs')
         compile 'com.android.support:appcompat-v7:'+project.SUPPORT_VERSION
-        testCompile 'junit:junit:4.12'
         compile 'com.jakewharton:butterknife:8.4.0'
         annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     }
