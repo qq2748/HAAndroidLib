@@ -1,15 +1,19 @@
 package ha.custcom.webview.lib.wedgit.webview;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-
+import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -106,6 +110,14 @@ public class CustomWebView extends WebView {
         settings.setDomStorageEnabled(true);
         JavascriptInterFace javascriptInterface= new JavascriptInterFace(this);
         addJavascriptInterface(javascriptInterface, "mycs");
+
+        setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                getSelectedData();
+                return false;
+            }
+        });
     }
 
     @Override
@@ -349,6 +361,49 @@ public class CustomWebView extends WebView {
             }
 
             mBoMethodsLoaded = true;
+        }
+    }
+
+    private void getSelectedData(){
+
+        String js= "(function getSelectedText() {"+
+                "var txt;"+
+                "if (window.getSelection) {"+
+                "txt = window.getSelection().toString();"+
+                "} else if (window.document.getSelection) {"+
+                "txt = window.document.getSelection().toString();"+
+                "} else if (window.document.selection) {"+
+                "txt = window.document.selection.createRange().text;"+
+                "}"+
+                "JSInterface.getText(txt);"+
+                "})()";
+        // calling the js function
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            evaluateJavascript("javascript:"+js, null);
+        }else{
+            loadUrl("javascript:"+js);
+        }
+    }
+
+    public class WebAppInterface {
+        Context mContext;
+
+        WebAppInterface(Context c) {
+            mContext = c;
+        }
+
+        @JavascriptInterface
+        public void getText(String text) {
+            // put selected text into clipdata
+            ClipboardManager clipboard = (ClipboardManager)
+                    mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+                clip = ClipData.newPlainText("simple text",text);
+                clipboard.setPrimaryClip(clip);
+            }
+            // gives the toast for selected text
+            Toast.makeText(mContext, text, Toast.LENGTH_SHORT).show();
         }
     }
 
