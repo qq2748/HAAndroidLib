@@ -357,6 +357,7 @@ public class CustomWebView extends WebView {
             } catch (NoSuchMethodException e) {
                 Log.e("CustomWebView", "loadMethods(): " + e.getMessage());
                 mSetFindIsUp = null;
+
                 mNotifyFindDialogDismissed = null;
 
 
